@@ -6,13 +6,17 @@ public class PlayNote : MonoBehaviour
 {
     private KeyOctav keyOctav;//номер выбраной октавы
     private FrequencyNotes frqNote;//частота ноты
+    private GameObject oscillator;
     private AudioSource oscilatorSinus;//осцилятор синусойды
+    
+
 
     public void Start()
     {
         keyOctav = gameObject.GetComponent<KeyOctav>();
-        oscilatorSinus = GameObject.Find("OsciliatorSinus").GetComponent<AudioSource>();
-
+        oscillator = GameObject.Find("OsciliatorSinus");
+        oscilatorSinus = oscillator.GetComponent<AudioSource>();
+        
 
         frqNote = new FrequencyNotes();
     }
@@ -20,24 +24,22 @@ public class PlayNote : MonoBehaviour
     public void PlayToNote(string nameKey)//проигрываем ноту
     {
         oscilatorSinus.volume = 1;
-        Note note = new Note(nameKey, keyOctav.NumOctav, frqNote.GetFrequency(nameKey));
-        
+        Note note = new Note(nameKey, keyOctav.NumOctav, frqNote.GetFrequency(nameKey));       
         oscilatorSinus.pitch = note.FrqNote;//устанавливаем высоту ноты
-
+        
         oscilatorSinus.Play();
         Debug.Log(note.NoteName);
 
     }
 
     public void StopPlayNote()//останавливаем звучание ноты
-    {
-        
+    {      
         StartCoroutine(StopedPlay());
     }
 
     
 
-    IEnumerator StopedPlay()
+    IEnumerator StopedPlay()//плавная остановка звучания ноты
     {
         yield return new WaitForSeconds(0.1f);
         oscilatorSinus.volume = 0;
