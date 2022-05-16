@@ -12,8 +12,10 @@ public class KeyNote : MonoBehaviour
     [SerializeField] TextMeshProUGUI textDelay;
     [SerializeField] Slider sliderDecay;
     [SerializeField] TextMeshProUGUI textDecay;
-    [SerializeField] GameObject btnSeq;
+    [SerializeField] GameObject seqObj;
+    [SerializeField] Button btnSeq;
     private Filters filters;//скрипт фильтров
+    private float positionBtnSeqX = 40;//расстояние между кнопками секвенсора
     PlayNote playNote;
     Sequencer sequencer;
 
@@ -71,11 +73,17 @@ public class KeyNote : MonoBehaviour
         sequencer.Stop();
     }
 
-    private void CreateSequencer()
+    private void CreateSequencer()//расставляем кнопки для секвенсора
     {
+        float x = 0;
         for(int i = 0; i < sequencer.SeqLength; i++)
         {
-            Instantiate(btnSeq);
+            Button btnNew = Instantiate(btnSeq);
+            btnNew.transform.SetParent(seqObj.transform);
+            btnNew.transform.localPosition = new Vector3(x, 0, 0);
+            btnNew.name = i.ToString();
+            
+            x += positionBtnSeqX;
         }
     }
 }
