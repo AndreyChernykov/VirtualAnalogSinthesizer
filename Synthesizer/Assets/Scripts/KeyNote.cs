@@ -12,14 +12,18 @@ public class KeyNote : MonoBehaviour
     [SerializeField] TextMeshProUGUI textDelay;
     [SerializeField] Slider sliderDecay;
     [SerializeField] TextMeshProUGUI textDecay;
+    [SerializeField] GameObject btnSeq;
     private Filters filters;//скрипт фильтров
     PlayNote playNote;
+    Sequencer sequencer;
 
     public void Start()
     {
         playNote = gameObject.GetComponent<PlayNote>();
-
+        sequencer = gameObject.GetComponent<Sequencer>();
         filters = GameObject.Find("OsciliatorSinus").GetComponent<Filters>();
+
+        CreateSequencer();
 
     }
 
@@ -55,5 +59,23 @@ public class KeyNote : MonoBehaviour
     {
         filters.Decay = sliderDecay.value;
         textDecay.text = "Decay " + (sliderDecay.value * 100).ToString("0");
+    }
+
+    public void PlaySeq()
+    {
+        sequencer.Play();
+    }
+
+    public void StopSeq()
+    {
+        sequencer.Stop();
+    }
+
+    private void CreateSequencer()
+    {
+        for(int i = 0; i < sequencer.SeqLength; i++)
+        {
+            Instantiate(btnSeq);
+        }
     }
 }
