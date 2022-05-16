@@ -8,11 +8,13 @@ public class Note
     private int octav;//номер октавы
     private float frqNote;//частота ноты
 
-    public Note(string noteName, int octav, float frqNote)
+    public Note(string noteName, int octav)
     {
         this.noteName = noteName;
         this.octav = octav;
-        this.frqNote = frqNote;
+        //this.frqNote = frqNote;
+
+        this.frqNote = new FrequencyNotes().GetFrequency(noteName);
 
         Frequency();
     }
@@ -41,6 +43,9 @@ public class Note
                 break;
             case 4:
                 frqNote *= 8;
+                break;
+            default:
+                frqNote = 0;
                 break;
         }
 
