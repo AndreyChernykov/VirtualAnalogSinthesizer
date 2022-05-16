@@ -21,10 +21,7 @@ public class Note
     {
         switch (octav)
         {
-            case -2:
-                frqNote /= 4;
-                break;
-            case -1:
+            case 0:
                 frqNote /= 2;
                 break;
             case 1:
@@ -32,6 +29,12 @@ public class Note
                 break;
             case 2:
                 frqNote *= 2;
+                break;
+            case 3:
+                frqNote *= 4;
+                break;
+            case 4:
+                frqNote *= 8;
                 break;
         }
 
