@@ -25,6 +25,7 @@ public class Sequencer : MonoBehaviour
         get { return seqLength; }
     }
 
+
     public void SetNote(Note note)//запись в массив секвенсора ноты
     {
         noteArr[keyNote.NumKeySeqToClick] = note;
@@ -69,6 +70,7 @@ public class Sequencer : MonoBehaviour
                 oscilatorSinus.volume = 1;
                 note = noteArr[i];
                 oscilatorSinus.pitch = note.FrqNote;
+                keyNote.KeysSeqMagic(i);
                 Debug.Log(noteArr[i].NoteName);
                 yield return new WaitForSeconds(speed);
             }

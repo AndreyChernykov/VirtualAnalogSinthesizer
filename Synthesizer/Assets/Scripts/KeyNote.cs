@@ -21,16 +21,20 @@ public class KeyNote : MonoBehaviour
     private float positionBtnSeqX = 40;//расстояние между кнопками секвенсора
     PlayNote playNote;
     Sequencer sequencer;
+    private Button[] btnSeqArr;
 
     public void Start()
     {
         playNote = gameObject.GetComponent<PlayNote>();
         sequencer = gameObject.GetComponent<Sequencer>();
         filters = GameObject.Find("OsciliatorSinus").GetComponent<Filters>();
+        btnSeqArr = new Button[sequencer.SeqLength];
 
         CreateSequencer();
 
     }
+
+   
 
     public void ClickKeyNote(string nameKey)//обрабатываем нажатие клавиши с нотой и получаем ее название
     {        
@@ -70,7 +74,10 @@ public class KeyNote : MonoBehaviour
 
     public void PlaySeq()
     {
+        toRec = true;
+        Rec();
         sequencer.Play();
+
     }
 
     public void StopSeq()
@@ -87,8 +94,15 @@ public class KeyNote : MonoBehaviour
             btnNew.transform.SetParent(seqObj.transform);
             btnNew.transform.localPosition = new Vector3(x, 0, 0);
             btnNew.name = i.ToString();
+            btnSeqArr[i] = btnNew;
             x += positionBtnSeqX;
         }
+    }
+
+    public void KeysSeqMagic(int numKey)//меняем цвет проигрываемой кнопке
+    {       
+        for (int i = 0; i < btnSeqArr.Length; i++) btnSeqArr[i].GetComponent<Image>().color = Color.white;
+        btnSeqArr[numKey].GetComponent<Image>().color = Color.green;
     }
 
     public int NumKeySeqToClick
@@ -109,6 +123,8 @@ public class KeyNote : MonoBehaviour
             btnRecSeq.GetComponent<Image>().color = Color.red;
             toRec = true;
         }
+
+        StopSeq();
     }
 
 }
