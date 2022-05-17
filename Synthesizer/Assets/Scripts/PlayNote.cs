@@ -7,7 +7,7 @@ public class PlayNote : MonoBehaviour
     private KeyOctav keyOctav;//номер выбраной октавы
     private GameObject oscillator;
     private AudioSource oscilatorSinus;//осцилятор синусойды
-    
+    private Sequencer sequencer;
 
 
     public void Start()
@@ -15,6 +15,7 @@ public class PlayNote : MonoBehaviour
         keyOctav = gameObject.GetComponent<KeyOctav>();
         oscillator = GameObject.Find("OsciliatorSinus");
         oscilatorSinus = oscillator.GetComponent<AudioSource>();
+        sequencer = GameObject.Find("Canvas").GetComponent<Sequencer>();
 
         oscilatorSinus.Play();
 
@@ -25,7 +26,8 @@ public class PlayNote : MonoBehaviour
         oscilatorSinus.volume = 1;
         Note note = new Note(nameKey, keyOctav.NumOctav);       
         oscilatorSinus.pitch = note.FrqNote;//устанавливаем высоту ноты
-        
+        sequencer.SetNote(note);
+
         //oscilatorSinus.Play();
         Debug.Log(note.NoteName);
 

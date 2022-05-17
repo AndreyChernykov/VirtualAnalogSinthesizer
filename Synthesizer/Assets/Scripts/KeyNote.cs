@@ -14,6 +14,9 @@ public class KeyNote : MonoBehaviour
     [SerializeField] TextMeshProUGUI textDecay;
     [SerializeField] GameObject seqObj;
     [SerializeField] Button btnSeq;
+    [SerializeField] Button btnRecSeq;
+    private int numKeySeqToClick;//номер нажатой кнопки на секвенсоре
+    private bool toRec = false;//нажата ли кнопка записи секвенции
     private Filters filters;//скрипт фильтров
     private float positionBtnSeqX = 40;//расстояние между кнопками секвенсора
     PlayNote playNote;
@@ -32,6 +35,8 @@ public class KeyNote : MonoBehaviour
     public void ClickKeyNote(string nameKey)//обрабатываем нажатие клавиши с нотой и получаем ее название
     {        
         playNote.PlayToNote(nameKey);
+
+        
 
         SliderDist();
         SliderDelay();
@@ -82,8 +87,28 @@ public class KeyNote : MonoBehaviour
             btnNew.transform.SetParent(seqObj.transform);
             btnNew.transform.localPosition = new Vector3(x, 0, 0);
             btnNew.name = i.ToString();
-            
             x += positionBtnSeqX;
         }
     }
+
+    public int NumKeySeqToClick
+    {
+        set { numKeySeqToClick = value;}
+        get { return numKeySeqToClick; }
+    }
+
+    public void Rec()//при нажатии на кнопку записи секвенции
+    {
+        if (toRec)
+        {
+            btnRecSeq.GetComponent<Image>().color = Color.white;
+            toRec = false;
+        }
+        else
+        {
+            btnRecSeq.GetComponent<Image>().color = Color.red;
+            toRec = true;
+        }
+    }
+
 }
