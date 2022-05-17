@@ -12,14 +12,6 @@ public class Sequencer : MonoBehaviour
     Note note;
     private Note[] noteArr;//массив нот секвенции
 
-    private void TestSeq()
-    {
-        
-        noteArr[0] = new Note("C", 1);
-        noteArr[1] = new Note("C", 2);
-        noteArr[3] = new Note("C", 3);
-    }
-
     public int SeqLength
     {
         get { return seqLength; }
@@ -39,7 +31,6 @@ public class Sequencer : MonoBehaviour
         keyNote = GameObject.Find("Canvas").GetComponent<KeyNote>();
         oscilatorSinus = GameObject.Find("OsciliatorSinus").GetComponent<AudioSource>();
 
-        TestSeq();
     }
 
     public void Play()

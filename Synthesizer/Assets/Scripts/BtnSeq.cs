@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class BtnSeq : MonoBehaviour
 {
@@ -13,5 +14,6 @@ public class BtnSeq : MonoBehaviour
     public void ClickBtnSeq()// обработка нажатий кнопок секвенсора
     {
         keyNote.NumKeySeqToClick = System.Int32.Parse(this.name);
+        this.GetComponent<Image>().color = Color.red;
     }
 }

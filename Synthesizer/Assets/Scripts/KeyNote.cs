@@ -40,7 +40,11 @@ public class KeyNote : MonoBehaviour
     {        
         playNote.PlayToNote(nameKey);
 
-        
+        if (toRec)//при включённой записи шагаем по секвенции
+        {
+            KeysSeqMagic(numKeySeqToClick);
+            numKeySeqToClick++;
+        }
 
         SliderDist();
         SliderDelay();
@@ -102,7 +106,8 @@ public class KeyNote : MonoBehaviour
     public void KeysSeqMagic(int numKey)//меняем цвет проигрываемой кнопке
     {       
         for (int i = 0; i < btnSeqArr.Length; i++) btnSeqArr[i].GetComponent<Image>().color = Color.white;
-        btnSeqArr[numKey].GetComponent<Image>().color = Color.green;
+        if(toRec)btnSeqArr[numKey].GetComponent<Image>().color = Color.red;//если включина запись
+        else btnSeqArr[numKey].GetComponent<Image>().color = Color.green;//если включино воспроизведение
     }
 
     public int NumKeySeqToClick
@@ -115,6 +120,7 @@ public class KeyNote : MonoBehaviour
     {
         if (toRec)
         {
+            numKeySeqToClick = 0;
             btnRecSeq.GetComponent<Image>().color = Color.white;
             toRec = false;
         }
@@ -125,6 +131,8 @@ public class KeyNote : MonoBehaviour
         }
 
         StopSeq();
+
+
     }
 
 }

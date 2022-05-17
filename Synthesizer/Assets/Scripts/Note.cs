@@ -70,6 +70,7 @@ public class FrequencyNotes
     {
         frqNotes = new Dictionary<string, float>()//частоты нот первой октавы
         {
+            {"Q", 0 },
             {"A", 1f },
             {"A#", 1.05f },
             {"B", 1.12f },
