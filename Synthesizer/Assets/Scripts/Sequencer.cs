@@ -5,7 +5,7 @@ using UnityEngine;
 public class Sequencer : MonoBehaviour
 {
     private AudioSource oscilatorSinus;//осцилятор синусойды
-    private float speed = 1;//скорость переключения нот
+    private float speed = 0.25f;//скорость переключения нот
     private int seqLength = 16;//количество шагов секвенсора
     private bool toPlaySeq = false;
     private KeyNote keyNote;
@@ -20,7 +20,7 @@ public class Sequencer : MonoBehaviour
 
     public void SetNote(Note note)//запись в массив секвенсора ноты
     {
-        noteArr[keyNote.NumKeySeqToClick] = note;
+       if(keyNote.NumKeySeqToClick < seqLength) noteArr[keyNote.NumKeySeqToClick] = note;
     }
 
     public void Start()

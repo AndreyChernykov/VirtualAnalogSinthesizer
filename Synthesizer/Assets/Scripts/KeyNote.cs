@@ -40,7 +40,7 @@ public class KeyNote : MonoBehaviour
     {        
         playNote.PlayToNote(nameKey);
 
-        if (toRec)//при включённой записи шагаем по секвенции
+        if (toRec && numKeySeqToClick < sequencer.SeqLength)//при включённой записи шагаем по секвенции
         {
             KeysSeqMagic(numKeySeqToClick);
             numKeySeqToClick++;
@@ -120,19 +120,20 @@ public class KeyNote : MonoBehaviour
     {
         if (toRec)
         {
-            numKeySeqToClick = 0;
+            
             btnRecSeq.GetComponent<Image>().color = Color.white;
             toRec = false;
         }
         else
         {
+            numKeySeqToClick = 0;
             btnRecSeq.GetComponent<Image>().color = Color.red;
             toRec = true;
         }
 
         StopSeq();
-
-
     }
+
+
 
 }

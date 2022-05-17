@@ -13,7 +13,7 @@ public class BtnSeq : MonoBehaviour
     }
     public void ClickBtnSeq()// обработка нажатий кнопок секвенсора
     {
-        keyNote.NumKeySeqToClick = System.Int32.Parse(this.name);
+        keyNote.NumKeySeqToClick = System.Int32.Parse(this.name.ToString());
         this.GetComponent<Image>().color = Color.red;
     }
 }
