@@ -69,7 +69,7 @@ public class Sequencer : MonoBehaviour
 
     }
 
-    public float BPI//устанавливаем скорость секвенсора
+    public float BPM//устанавливаем скорость секвенсора
     {
         set { speed = 60 / value; }
     }

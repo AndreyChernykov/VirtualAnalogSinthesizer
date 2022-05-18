@@ -15,11 +15,12 @@ public class KeyNote : MonoBehaviour
     [SerializeField] GameObject seqObj;
     [SerializeField] Button btnSeq;
     [SerializeField] Button btnRecSeq;
+    [SerializeField] TextMeshProUGUI textBPM;
     private int numKeySeqToClick;//номер нажатой кнопки на секвенсоре
     private bool toRec = false;//нажата ли кнопка записи секвенции
     private Filters filters;//скрипт фильтров
     private float positionBtnSeqX = 40;//расстояние между кнопками секвенсора
-    private int bpi = 430;//скорость секвенсора
+    private int bpm = 120;//скорость секвенсора
     private bool bpiCount = false;
     PlayNote playNote;
     Sequencer sequencer;
@@ -32,6 +33,7 @@ public class KeyNote : MonoBehaviour
         filters = GameObject.Find("OsciliatorSinus").GetComponent<Filters>();
         btnSeqArr = new Button[sequencer.SeqLength];
 
+        textBPM.text = bpm.ToString();
         CreateSequencer();
 
     }
@@ -136,12 +138,9 @@ public class KeyNote : MonoBehaviour
         StopSeq();
     }
 
-    public void Bpi(string s)//устанавливаем скорость секвенсора
+    public void Bpm(string s)//устанавливаем скорость секвенсора
     {
         bpiCount = true;
-        //bpi += s.Equals("+") ? 1 : -1;
-        //sequencer.BPI = bpi;
-        //Debug.Log("bpi = " + bpi);
         StartCoroutine(BpiCounter(s));
     }
 
@@ -153,17 +152,17 @@ public class KeyNote : MonoBehaviour
 
     public IEnumerator BpiCounter(string s)
     {
-        while(bpi < 440 && bpi > 1 && bpiCount)
+        while(bpm < 440 && bpm > 1 && bpiCount)
         {
-            bpi += s.Equals("+") ? 1 : -1;
-            sequencer.BPI = bpi;
-            Debug.Log("bpi = " + bpi);
+            bpm += s.Equals("+") ? 1 : -1;
+            sequencer.BPM = bpm;
+            textBPM.text = bpm.ToString();
             yield return new WaitForSeconds(0.2f);
         }
 
-        if (bpi <= 1 && s.Equals("+")) bpi++;
-        if(bpi >= 440 && s.Equals("-")) bpi--;
-        Debug.Log("bpi = " + bpi);
+        if (bpm <= 1 && s.Equals("+")) bpm++;
+        if(bpm >= 440 && s.Equals("-")) bpm--;
+        textBPM.text = bpm.ToString();
         StopCoroutine(BpiCounter(s));
 
 
