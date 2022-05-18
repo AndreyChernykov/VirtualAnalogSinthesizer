@@ -19,6 +19,8 @@ public class KeyNote : MonoBehaviour
     private bool toRec = false;//нажата ли кнопка записи секвенции
     private Filters filters;//скрипт фильтров
     private float positionBtnSeqX = 40;//расстояние между кнопками секвенсора
+    private int bpi = 430;//скорость секвенсора
+    private bool bpiCount = false;
     PlayNote playNote;
     Sequencer sequencer;
     private Button[] btnSeqArr;
@@ -134,6 +136,38 @@ public class KeyNote : MonoBehaviour
         StopSeq();
     }
 
+    public void Bpi(string s)//устанавливаем скорость секвенсора
+    {
+        bpiCount = true;
+        //bpi += s.Equals("+") ? 1 : -1;
+        //sequencer.BPI = bpi;
+        //Debug.Log("bpi = " + bpi);
+        StartCoroutine(BpiCounter(s));
+    }
+
+    public void StopBpiCount()
+    {
+        bpiCount = false;
+        StopCoroutine(BpiCounter(""));
+    }
+
+    public IEnumerator BpiCounter(string s)
+    {
+        while(bpi < 440 && bpi > 1 && bpiCount)
+        {
+            bpi += s.Equals("+") ? 1 : -1;
+            sequencer.BPI = bpi;
+            Debug.Log("bpi = " + bpi);
+            yield return new WaitForSeconds(0.2f);
+        }
+
+        if (bpi <= 1 && s.Equals("+")) bpi++;
+        if(bpi >= 440 && s.Equals("-")) bpi--;
+        Debug.Log("bpi = " + bpi);
+        StopCoroutine(BpiCounter(s));
+
+
+    }
 
 
 }

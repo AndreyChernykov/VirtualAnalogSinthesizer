@@ -5,7 +5,7 @@ using UnityEngine;
 public class Sequencer : MonoBehaviour
 {
     private AudioSource oscilatorSinus;//осцилятор синусойды
-    private float speed = 0.25f;//скорость переключения нот
+    private float speed = 0.5f;//скорость переключения нот
     private int seqLength = 16;//количество шагов секвенсора
     private bool toPlaySeq = false;
     private KeyNote keyNote;
@@ -67,7 +67,10 @@ public class Sequencer : MonoBehaviour
             }
         }
 
+    }
 
-
+    public float BPI//устанавливаем скорость секвенсора
+    {
+        set { speed = 60 / value; }
     }
 }
