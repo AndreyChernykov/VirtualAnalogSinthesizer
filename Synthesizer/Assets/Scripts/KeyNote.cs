@@ -16,12 +16,17 @@ public class KeyNote : MonoBehaviour
     [SerializeField] Button btnSeq;
     [SerializeField] Button btnRecSeq;
     [SerializeField] TextMeshProUGUI textBPM;
+    [SerializeField] Button btnSinOsc;
+    [SerializeField] Button btnSawOsc;
     private int numKeySeqToClick;//номер нажатой кнопки на секвенсоре
     private bool toRec = false;//нажата ли кнопка записи секвенции
     private Filters filters;//скрипт фильтров
     private float positionBtnSeqX = 40;//расстояние между кнопками секвенсора
     private int bpm = 120;//скорость секвенсора
+    private int maxBpm = 440;//максимальная скорость секвенсора
     private bool bpiCount = false;
+    private bool onSinOsc = false;//включён ли осциллятор синусойды
+    private bool onSawOsc = false;//включён ли осциллятор пилы
     PlayNote playNote;
     Sequencer sequencer;
     private Button[] btnSeqArr;
@@ -38,7 +43,44 @@ public class KeyNote : MonoBehaviour
 
     }
 
-   
+    public void SinOscOnOff()//вкл-выкл осциллятор синусойды
+    {
+        if (onSinOsc)
+        {
+            btnSinOsc.GetComponent<Image>().color = Color.white;
+            onSinOsc = false;
+        }
+        else
+        {
+            btnSinOsc.GetComponent<Image>().color = Color.red;
+            onSinOsc = true;
+        }
+    }
+
+    public bool OnSinOsc
+    {
+        get { return onSinOsc; }
+    }
+
+    public void SawOscOnOff()//вкл-выкл осциллятор пилы
+    {
+        if (onSawOsc)
+        {
+            btnSawOsc.GetComponent<Image>().color = Color.white;
+            onSawOsc = false;
+        }
+        else
+        {
+            btnSawOsc.GetComponent<Image>().color = Color.red;
+            onSawOsc = true;
+        }
+    }
+
+    public bool OnSawOsc
+    {
+        get { return onSawOsc; }
+    }
+
 
     public void ClickKeyNote(string nameKey)//обрабатываем нажатие клавиши с нотой и получаем ее название
     {        
@@ -152,16 +194,16 @@ public class KeyNote : MonoBehaviour
 
     public IEnumerator BpiCounter(string s)
     {
-        while(bpm < 440 && bpm > 1 && bpiCount)
+        while(bpm < maxBpm && bpm > 1 && bpiCount)
         {
             bpm += s.Equals("+") ? 1 : -1;
             sequencer.BPM = bpm;
             textBPM.text = bpm.ToString();
-            yield return new WaitForSeconds(0.2f);
+            yield return new WaitForSeconds(0.15f);
         }
 
         if (bpm <= 1 && s.Equals("+")) bpm++;
-        if(bpm >= 440 && s.Equals("-")) bpm--;
+        if(bpm >= maxBpm && s.Equals("-")) bpm--;
         textBPM.text = bpm.ToString();
         StopCoroutine(BpiCounter(s));
 
