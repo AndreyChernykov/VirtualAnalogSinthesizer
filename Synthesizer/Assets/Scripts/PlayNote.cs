@@ -35,7 +35,7 @@ public class PlayNote : MonoBehaviour
         if (keyNote.OnSinOsc)
         {
             oscilatorSinus.volume = 1;           
-            oscilatorSinus.pitch = note.FrqNote;//устанавливаем высоту ноты  
+            oscilatorSinus.pitch = note.FrqNote;//устанавливаем высоту ноты
         }
         if (keyNote.OnSawOsc)
         {
@@ -45,6 +45,7 @@ public class PlayNote : MonoBehaviour
 
         Debug.Log(note.NoteName);
     }
+
 
     public void StopPlayNote()//останавливаем звучание ноты
     {

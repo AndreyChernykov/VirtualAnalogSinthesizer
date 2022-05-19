@@ -15,12 +15,13 @@ public class KeyNote : MonoBehaviour
     [SerializeField] GameObject seqObj;
     [SerializeField] Button btnSeq;
     [SerializeField] Button btnRecSeq;
+    [SerializeField] Button btnPlaySeq;
     [SerializeField] TextMeshProUGUI textBPM;
     [SerializeField] Button btnSinOsc;
     [SerializeField] Button btnSawOsc;
     private int numKeySeqToClick;//номер нажатой кнопки на секвенсоре
     private bool toRec = false;//нажата ли кнопка записи секвенции
-    private Filters filters;//скрипт фильтров
+    private Filters filters, filters2;//фильтра
     private float positionBtnSeqX = 40;//расстояние между кнопками секвенсора
     private int bpm = 120;//скорость секвенсора
     private int maxBpm = 440;//максимальная скорость секвенсора
@@ -36,6 +37,7 @@ public class KeyNote : MonoBehaviour
         playNote = gameObject.GetComponent<PlayNote>();
         sequencer = gameObject.GetComponent<Sequencer>();
         filters = GameObject.Find("OsciliatorSinus").GetComponent<Filters>();
+        filters2 = GameObject.Find("OsciliatorSaw").GetComponent<Filters>();
         btnSeqArr = new Button[sequencer.SeqLength];
 
         textBPM.text = bpm.ToString();
@@ -92,9 +94,14 @@ public class KeyNote : MonoBehaviour
             numKeySeqToClick++;
         }
 
-        SliderDist();
-        SliderDelay();
-        SliderDecay();
+
+    }
+
+    public void FixedUpdate()
+    {
+        SliderDist(filters, filters2);
+        SliderDelay(filters, filters2);
+        SliderDecay(filters, filters2);
     }
 
     public void NoClickNote()//при отпускании клавиши с нотой
@@ -102,23 +109,26 @@ public class KeyNote : MonoBehaviour
         playNote.StopPlayNote();
     }
 
-    public void SliderDist()//дисторшен
+    public void SliderDist(params Filters[] fil)//дисторшен
     {
-        filters.DistValue = sliderDist.value;
+        foreach(Filters f in fil)
+        {
+            f.DistValue = sliderDist.value;
+            f.Distortion();//дисторшен фильтр
+        }
         textDist.text = "Dist " + (sliderDist.value * 100).ToString("0");
-        filters.Distortion();//дисторшен фильтр
     }
 
 
-    public void SliderDelay()
+    public void SliderDelay(params Filters[] fil)
     {
         textDelay.text = "Delay " + sliderDelay.value.ToString("0");
-        filters.Delay = sliderDelay.value;
+        foreach(Filters f in fil) f.Delay = sliderDelay.value;
     }
 
-    public void SliderDecay()
+    public void SliderDecay(params Filters[] fil)
     {
-        filters.Decay = sliderDecay.value;
+        foreach(Filters f in fil) f.Decay = sliderDecay.value;
         textDecay.text = "Decay " + (sliderDecay.value * 100).ToString("0");
     }
 
@@ -127,12 +137,13 @@ public class KeyNote : MonoBehaviour
         toRec = true;
         Rec();
         sequencer.Play();
-
+        btnPlaySeq.interactable = false;
     }
 
     public void StopSeq()
     {
         sequencer.Stop();
+        btnPlaySeq.interactable = true;
     }
 
     private void CreateSequencer()//расставляем кнопки для секвенсора

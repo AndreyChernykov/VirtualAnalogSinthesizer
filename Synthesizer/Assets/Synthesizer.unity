@@ -1086,7 +1086,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 2e87ddc27abf18c4d83dd51142a47280, type: 3}
+  m_audioClip: {fileID: 8300000, guid: ff60919646d7e3b40b22b6c4ec45bc2a, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 0
   m_Pitch: 1
@@ -2479,6 +2479,7 @@ MonoBehaviour:
   seqObj: {fileID: 594646952}
   btnSeq: {fileID: 8742830617979970667, guid: 05cd56fe4de1564408745d8500827923, type: 3}
   btnRecSeq: {fileID: 618896860}
+  btnPlaySeq: {fileID: 523605929}
   textBPM: {fileID: 1584194954}
   btnSinOsc: {fileID: 1937189759}
   btnSawOsc: {fileID: 160523594}
@@ -4836,18 +4837,7 @@ MonoBehaviour:
   m_Value: 0
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 535248702}
-        m_MethodName: SliderDist
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!1 &1361529552
 GameObject:
   m_ObjectHideFlags: 0
@@ -7122,18 +7112,7 @@ MonoBehaviour:
   m_Value: 0
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 535248702}
-        m_MethodName: SliderDecay
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!1 &1937189757
 GameObject:
   m_ObjectHideFlags: 0
@@ -7731,18 +7710,7 @@ MonoBehaviour:
   m_Value: 0
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 535248702}
-        m_MethodName: SliderDelay
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!1 &2064313134
 GameObject:
   m_ObjectHideFlags: 0
