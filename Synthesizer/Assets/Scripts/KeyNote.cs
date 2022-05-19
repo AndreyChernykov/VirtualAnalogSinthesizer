@@ -12,6 +12,8 @@ public class KeyNote : MonoBehaviour
     [SerializeField] TextMeshProUGUI textDelay;
     [SerializeField] Slider sliderDecay;
     [SerializeField] TextMeshProUGUI textDecay;
+    [SerializeField] Slider sliderCutoff;
+    [SerializeField] Slider sliderReso;
     [SerializeField] GameObject seqObj;
     [SerializeField] Button btnSeq;
     [SerializeField] Button btnRecSeq;
@@ -19,6 +21,8 @@ public class KeyNote : MonoBehaviour
     [SerializeField] TextMeshProUGUI textBPM;
     [SerializeField] Button btnSinOsc;
     [SerializeField] Button btnSawOsc;
+    [SerializeField] Button btnFilter;
+    private string oscForFiltrs = "";//какой осциллятор выбран для фильтра катоф
     private int numKeySeqToClick;//номер нажатой кнопки на секвенсоре
     private bool toRec = false;//нажата ли кнопка записи секвенции
     private Filters filters, filters2;//фильтра
@@ -102,6 +106,8 @@ public class KeyNote : MonoBehaviour
         SliderDist(filters, filters2);
         SliderDelay(filters, filters2);
         SliderDecay(filters, filters2);
+        Cutoff();
+        Resonance();
     }
 
     public void NoClickNote()//при отпускании клавиши с нотой
@@ -218,8 +224,35 @@ public class KeyNote : MonoBehaviour
         textBPM.text = bpm.ToString();
         StopCoroutine(BpiCounter(s));
 
-
     }
 
+    public void ChoiceFilterOsc()//выбор переключения фильтра на осциллятор
+    {
+        oscForFiltrs = btnFilter.GetComponentInChildren<Text>().GetComponent<Text>().text;
+        if (oscForFiltrs.Equals("Sinus"))
+        {
+            btnFilter.GetComponentInChildren<Text>().GetComponent<Text>().text = "Saw";
+            sliderCutoff.value = filters2.Cutoff;
+            sliderReso.value = filters2.Resonance;
+        }
+        else
+        {
+            btnFilter.GetComponentInChildren<Text>().GetComponent<Text>().text = "Sinus";
+            sliderCutoff.value = filters.Cutoff;
+            sliderReso.value = filters.Resonance;
+        }
+        Debug.Log(oscForFiltrs);
+    }
 
+    private void Cutoff()
+    {
+        if (oscForFiltrs.Equals("Sinus")) filters2.Cutoff = sliderCutoff.value;
+        else filters.Cutoff = sliderCutoff.value;
+    }
+
+    private void Resonance()
+    {
+        if (oscForFiltrs.Equals("Sinus")) filters2.Resonance = sliderReso.value;
+        else filters.Resonance = sliderReso.value;
+    }
 }

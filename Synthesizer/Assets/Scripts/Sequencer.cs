@@ -58,15 +58,13 @@ public class Sequencer : MonoBehaviour
     }
 
     private IEnumerator PlaySequence()
-    {
-        
-        oscilatorSinus.volume = keyNote.OnSinOsc ? 1 : 0;
-        oscillatorSaw.volume = keyNote.OnSawOsc ? 1 : 0;
-
+    {      
         while (toPlaySeq)
         {
             for (int i = 0; i < noteArr.Length && toPlaySeq; i++)
             {
+                oscilatorSinus.volume = keyNote.OnSinOsc ? 1 : 0;
+                oscillatorSaw.volume = keyNote.OnSawOsc ? 1 : 0;
                 //oscilatorSinus.volume = 1;
                 note = noteArr[i];
                 oscilatorSinus.pitch = note.FrqNote;
@@ -76,7 +74,6 @@ public class Sequencer : MonoBehaviour
                 yield return new WaitForSeconds(speed);
             }
         }
-
     }
 
     public float BPM//устанавливаем скорость секвенсора
