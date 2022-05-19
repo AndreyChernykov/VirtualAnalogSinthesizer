@@ -103,11 +103,13 @@ public class KeyNote : MonoBehaviour
 
     public void FixedUpdate()
     {
-        SliderDist(filters, filters2);
-        SliderDelay(filters, filters2);
-        SliderDecay(filters, filters2);
-        Cutoff();
-        Resonance();
+        Filters fil = oscForFiltrs.Equals("Sinus") ? filters2 : filters;
+
+        SliderDist(fil);
+        SliderDelay(fil);
+        SliderDecay(fil);
+        SliderCutoff(fil);
+        SliderResonance(fil);
     }
 
     public void NoClickNote()//при отпускании клавиши с нотой
@@ -115,28 +117,6 @@ public class KeyNote : MonoBehaviour
         playNote.StopPlayNote();
     }
 
-    public void SliderDist(params Filters[] fil)//дисторшен
-    {
-        foreach(Filters f in fil)
-        {
-            f.DistValue = sliderDist.value;
-            f.Distortion();//дисторшен фильтр
-        }
-        textDist.text = "Dist " + (sliderDist.value * 100).ToString("0");
-    }
-
-
-    public void SliderDelay(params Filters[] fil)
-    {
-        textDelay.text = "Delay " + sliderDelay.value.ToString("0");
-        foreach(Filters f in fil) f.Delay = sliderDelay.value;
-    }
-
-    public void SliderDecay(params Filters[] fil)
-    {
-        foreach(Filters f in fil) f.Decay = sliderDecay.value;
-        textDecay.text = "Decay " + (sliderDecay.value * 100).ToString("0");
-    }
 
     public void PlaySeq()
     {
@@ -228,31 +208,59 @@ public class KeyNote : MonoBehaviour
 
     public void ChoiceFilterOsc()//выбор переключения фильтра на осциллятор
     {
+        Filters fil;
         oscForFiltrs = btnFilter.GetComponentInChildren<Text>().GetComponent<Text>().text;
         if (oscForFiltrs.Equals("Sinus"))
         {
             btnFilter.GetComponentInChildren<Text>().GetComponent<Text>().text = "Saw";
-            sliderCutoff.value = filters2.Cutoff;
-            sliderReso.value = filters2.Resonance;
+            FilterParam(filters2);
+
         }
         else
         {
             btnFilter.GetComponentInChildren<Text>().GetComponent<Text>().text = "Sinus";
-            sliderCutoff.value = filters.Cutoff;
-            sliderReso.value = filters.Resonance;
+            FilterParam(filters);
         }
+
+        void FilterParam(Filters f)
+        {
+            sliderCutoff.value = f.Cutoff;
+            sliderReso.value = f.Resonance;
+            sliderDist.value = f.DistValue;
+            sliderDelay.value = f.Delay;
+            sliderDecay.value = f.Decay;
+        }
+
         Debug.Log(oscForFiltrs);
     }
 
-    private void Cutoff()
+    private void SliderCutoff(Filters f)
     {
-        if (oscForFiltrs.Equals("Sinus")) filters2.Cutoff = sliderCutoff.value;
-        else filters.Cutoff = sliderCutoff.value;
+        f.Cutoff = sliderCutoff.value;
     }
 
-    private void Resonance()
+    private void SliderResonance(Filters f)
     {
-        if (oscForFiltrs.Equals("Sinus")) filters2.Resonance = sliderReso.value;
-        else filters.Resonance = sliderReso.value;
+        f.Resonance = sliderReso.value;
+    }
+
+
+    public void SliderDist(Filters f)//дисторшен
+    {
+        f.DistValue = sliderDist.value;
+        f.Distortion();//дисторшен фильтр
+        textDist.text = "Dist " + (sliderDist.value * 100).ToString("0");
+    }
+
+    public void SliderDelay(Filters f)
+    {
+        textDelay.text = "Delay " + sliderDelay.value.ToString("0");
+        f.Delay = sliderDelay.value;
+    }
+
+    public void SliderDecay(Filters f)
+    {
+        f.Decay = sliderDecay.value;
+        textDecay.text = "Decay " + (sliderDecay.value * 100).ToString("0");
     }
 }

@@ -24,16 +24,19 @@ public class Filters : MonoBehaviour
 
     public float DistValue
     {
+        get { return distValue; }
         set { distValue = value; }
     }
 
     public float Delay//делей
     {
+        get { return echoFilter.delay; }
         set { echoFilter.delay = value; }
     }
 
     public float Decay//декей
     {
+        get { return echoFilter.decayRatio; }
         set { echoFilter.decayRatio = value; }
     }
 
