@@ -22,6 +22,8 @@ public class KeyNote : MonoBehaviour
     [SerializeField] Button btnSinOsc;
     [SerializeField] Button btnSawOsc;
     [SerializeField] Button btnFilter;
+    [SerializeField] Button btnSquareLFO;
+    [SerializeField] Button btnTriangleLFO;
     private string oscForFiltrs = "";//какой осциллятор выбран для фильтра катоф
     private int numKeySeqToClick;//номер нажатой кнопки на секвенсоре
     private bool toRec = false;//нажата ли кнопка записи секвенции
@@ -34,6 +36,7 @@ public class KeyNote : MonoBehaviour
     private bool onSawOsc = false;//включён ли осциллятор пилы
     PlayNote playNote;
     Sequencer sequencer;
+    LFO lfo, lfo2;
     private Button[] btnSeqArr;
 
     public void Start()
@@ -42,6 +45,8 @@ public class KeyNote : MonoBehaviour
         sequencer = gameObject.GetComponent<Sequencer>();
         filters = GameObject.Find("OsciliatorSinus").GetComponent<Filters>();
         filters2 = GameObject.Find("OsciliatorSaw").GetComponent<Filters>();
+        lfo = GameObject.Find("OsciliatorSinus").GetComponent<LFO>();
+        lfo2 = GameObject.Find("OsciliatorSaw").GetComponent<LFO>();
         btnSeqArr = new Button[sequencer.SeqLength];
 
         textBPM.text = bpm.ToString();
@@ -51,16 +56,18 @@ public class KeyNote : MonoBehaviour
 
     public void SinOscOnOff()//вкл-выкл осциллятор синусойды
     {
+        Color c;
         if (onSinOsc)
         {
-            btnSinOsc.GetComponent<Image>().color = Color.white;
+            c = Color.white;
             onSinOsc = false;
         }
         else
         {
-            btnSinOsc.GetComponent<Image>().color = Color.red;
+            c = Color.red;
             onSinOsc = true;
         }
+        btnSinOsc.GetComponent<Image>().color = c;
     }
 
     public bool OnSinOsc
@@ -70,16 +77,18 @@ public class KeyNote : MonoBehaviour
 
     public void SawOscOnOff()//вкл-выкл осциллятор пилы
     {
+        Color c;
         if (onSawOsc)
         {
-            btnSawOsc.GetComponent<Image>().color = Color.white;
+            c = Color.white;
             onSawOsc = false;
         }
         else
         {
-            btnSawOsc.GetComponent<Image>().color = Color.red;
+            c = Color.red;
             onSawOsc = true;
         }
+        btnSawOsc.GetComponent<Image>().color = c;
     }
 
     public bool OnSawOsc
@@ -147,10 +156,12 @@ public class KeyNote : MonoBehaviour
     }
 
     public void KeysSeqMagic(int numKey)//меняем цвет проигрываемой кнопке
-    {       
+    {
+        Color c;
         for (int i = 0; i < btnSeqArr.Length; i++) btnSeqArr[i].GetComponent<Image>().color = Color.white;
-        if(toRec)btnSeqArr[numKey].GetComponent<Image>().color = Color.red;//если включина запись
-        else btnSeqArr[numKey].GetComponent<Image>().color = Color.green;//если включино воспроизведение
+        if(toRec)c = Color.red;//если включина запись
+        else c = Color.green;//если включино воспроизведение
+        btnSeqArr[numKey].GetComponent<Image>().color = c;
     }
 
     public int NumKeySeqToClick
@@ -161,19 +172,19 @@ public class KeyNote : MonoBehaviour
 
     public void Rec()//при нажатии на кнопку записи секвенции
     {
+        Color c;
         if (toRec)
-        {
-            
-            btnRecSeq.GetComponent<Image>().color = Color.white;
+        {           
+            c = Color.white;
             toRec = false;
         }
         else
         {
             numKeySeqToClick = 0;
-            btnRecSeq.GetComponent<Image>().color = Color.red;
+            c = Color.red;
             toRec = true;
         }
-
+        btnRecSeq.GetComponent<Image>().color = c;
         StopSeq();
     }
 
@@ -208,28 +219,26 @@ public class KeyNote : MonoBehaviour
 
     public void ChoiceFilterOsc()//выбор переключения фильтра на осциллятор
     {
+        string s;
         Filters fil;
         oscForFiltrs = btnFilter.GetComponentInChildren<Text>().GetComponent<Text>().text;
         if (oscForFiltrs.Equals("Sinus"))
         {
-            btnFilter.GetComponentInChildren<Text>().GetComponent<Text>().text = "Saw";
-            FilterParam(filters2);
-
+            s = "Saw";
+            fil = filters2;
         }
         else
         {
-            btnFilter.GetComponentInChildren<Text>().GetComponent<Text>().text = "Sinus";
-            FilterParam(filters);
+            s = "Sinus";
+            fil = filters;
         }
+        btnFilter.GetComponentInChildren<Text>().GetComponent<Text>().text = s;
 
-        void FilterParam(Filters f)
-        {
-            sliderCutoff.value = f.Cutoff;
-            sliderReso.value = f.Resonance;
-            sliderDist.value = f.DistValue;
-            sliderDelay.value = f.Delay;
-            sliderDecay.value = f.Decay;
-        }
+        sliderCutoff.value = fil.Cutoff;
+        sliderReso.value = fil.Resonance;
+        sliderDist.value = fil.DistValue;
+        sliderDelay.value = fil.Delay;
+        sliderDecay.value = fil.Decay;
 
         Debug.Log(oscForFiltrs);
     }
@@ -263,4 +272,12 @@ public class KeyNote : MonoBehaviour
         f.Decay = sliderDecay.value;
         textDecay.text = "Decay " + (sliderDecay.value * 100).ToString("0");
     }
+
+    public void BtnLFO(string s)
+    {
+        //lfo.OnLFO("");
+        lfo.OnLFO(s);
+        
+    }
+
 }

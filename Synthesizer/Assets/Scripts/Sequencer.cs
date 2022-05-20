@@ -37,16 +37,12 @@ public class Sequencer : MonoBehaviour
     }
 
     public void Play()
-    {
-        
+    {        
         if (!toPlaySeq)
         {
-
             toPlaySeq = true;
-            StartCoroutine(PlaySequence());
-            
+            StartCoroutine(PlaySequence());           
         }
-
     }
 
     public void Stop()
