@@ -23,7 +23,8 @@ public class KeyNote : MonoBehaviour
     [SerializeField] Button btnSawOsc;
     [SerializeField] Button btnFilter;
     [SerializeField] Button btnSquareLFO;
-    [SerializeField] Button btnTriangleLFO;
+    [SerializeField] Slider sliderFrequency;
+    [SerializeField] Slider sliderAmplitude;
     private string oscForFiltrs = "";//какой осциллятор выбран для фильтра катоф
     private int numKeySeqToClick;//номер нажатой кнопки на секвенсоре
     private bool toRec = false;//нажата ли кнопка записи секвенции
@@ -119,6 +120,11 @@ public class KeyNote : MonoBehaviour
         SliderDecay(fil);
         SliderCutoff(fil);
         SliderResonance(fil);
+
+        FrequencyLFO();
+        AmplitudeLFO();
+
+
     }
 
     public void NoClickNote()//при отпускании клавиши с нотой
@@ -273,11 +279,33 @@ public class KeyNote : MonoBehaviour
         textDecay.text = "Decay " + (sliderDecay.value * 100).ToString("0");
     }
 
-    public void BtnLFO(string s)
+    public void BtnLFO()//кнопка включения лфо
     {
-        //lfo.OnLFO("");
-        lfo.OnLFO(s);
+        Color color;
+
+        if (!lfo.OnLFO)
+        {
+            lfo.OnLFO = true;
+            lfo.StartLFO();
+            color = Color.red;
+        }
+        else
+        {
+            lfo.OnLFO = false;
+            color = Color.white;
+        }
+        btnSquareLFO.GetComponent<Image>().color = color;
         
+    }
+
+    public void FrequencyLFO()//частота ЛФО
+    {
+        lfo.TimeOscillation = sliderFrequency.value;
+    }
+
+    public void AmplitudeLFO()//амплитуда ЛФО
+    {
+        lfo.Amplitude = sliderAmplitude.value;
     }
 
 }

@@ -1,64 +1,58 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class LFO : MonoBehaviour
 {
-    private float min = -0.03f;//максимальный уровень
-    private float max = 0.03f;//минимальный уровень
-    public float timeOscillation = 0.5f;
-    private string onLFO;//какое включено LFO
+    private float amplitude = -0.03f;
+    float timeOscillation;
+    private float hz = 0.5f;
+    private bool onLFO = false;//включено ли LFO
+    
     private AudioSource audioSource;
-
+    
 
     public void Start()
     {
         audioSource = GetComponent<AudioSource>();
+
         
     }
 
-    public void OnLFO(string s)
+    public void StartLFO()
     {
-        onLFO = s;
-
-        switch (s)
-        {
-            case "square":
-                StartCoroutine(OscillatorSquare());
-                break;
-            case "triangle":
-                StartCoroutine(OscillatorTriangle());
-                break;
-        }
+        StartCoroutine(OscillatorSquare());
     }
 
     private IEnumerator OscillatorSquare()//лфо квадрат
     {
-        if (onLFO != "square") StopCoroutine(OscillatorSquare());
-        while (onLFO.Equals("square"))
+        if (!onLFO) StopCoroutine(OscillatorSquare());
+        while (onLFO)
         {
-            audioSource.pitch += min;
+            audioSource.pitch -= amplitude;
             yield return new WaitForSeconds(timeOscillation);
-            audioSource.pitch += max;
+            audioSource.pitch += amplitude;
             yield return new WaitForSeconds(timeOscillation);
         }
     }
 
-
-    private IEnumerator OscillatorTriangle()//лфо треугольник
+    public bool OnLFO
     {
-        Debug.Log("triangle");
-        while (audioSource.pitch > audioSource.pitch + max)
-        {
-            audioSource.pitch += 0.001f;
-            yield return new WaitForSeconds(timeOscillation);
-        }
-        while (audioSource.pitch < audioSource.pitch - min)
-        {
-            audioSource.pitch -= 0.001f;
-            yield return new WaitForSeconds(timeOscillation);
-        }
-
-
+        get { return onLFO; }
+        set { onLFO = value; }
     }
+
+    public float TimeOscillation
+    {
+        get { return timeOscillation; }
+        set { timeOscillation = hz/value; }
+    }
+
+    public float Amplitude
+    {
+        get { return amplitude; }
+        set { amplitude = value; }
+    }
+
 }

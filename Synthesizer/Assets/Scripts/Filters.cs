@@ -9,6 +9,7 @@ public class Filters : MonoBehaviour
     private AudioEchoFilter echoFilter;
     private AudioLowPassFilter lowPassFilter;
     private float distValue;//уровень дисторшена
+    
 
     public void Start()
     {
