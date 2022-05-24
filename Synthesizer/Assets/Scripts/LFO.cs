@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class LFO : MonoBehaviour
 {
     private float amplitude = -0.03f;
-    float timeOscillation;
+    float timeOscillation = 0.5f;
     private float hz = 0.5f;
     private bool onLFO = false;//включено ли LFO
     
@@ -45,7 +45,7 @@ public class LFO : MonoBehaviour
 
     public float TimeOscillation
     {
-        get { return timeOscillation; }
+        get { return hz/timeOscillation; }
         set { timeOscillation = hz/value; }
     }
 

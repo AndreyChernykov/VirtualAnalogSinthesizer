@@ -38,6 +38,7 @@ public class KeyNote : MonoBehaviour
     PlayNote playNote;
     Sequencer sequencer;
     LFO lfo, lfo2;
+    LFO lfoChoice;
     private Button[] btnSeqArr;
 
     public void Start()
@@ -114,6 +115,7 @@ public class KeyNote : MonoBehaviour
     public void FixedUpdate()
     {
         Filters fil = oscForFiltrs.Equals("Sinus") ? filters2 : filters;
+        lfoChoice = oscForFiltrs.Equals("Sinus") ? lfo2 : lfo;
 
         SliderDist(fil);
         SliderDelay(fil);
@@ -121,8 +123,8 @@ public class KeyNote : MonoBehaviour
         SliderCutoff(fil);
         SliderResonance(fil);
 
-        FrequencyLFO();
-        AmplitudeLFO();
+        FrequencyLFO(lfoChoice);
+        AmplitudeLFO(lfoChoice);
 
 
     }
@@ -227,24 +229,35 @@ public class KeyNote : MonoBehaviour
     {
         string s;
         Filters fil;
+
         oscForFiltrs = btnFilter.GetComponentInChildren<Text>().GetComponent<Text>().text;
         if (oscForFiltrs.Equals("Sinus"))
         {
             s = "Saw";
             fil = filters2;
+            
+            lfoChoice = lfo2;
         }
         else
         {
             s = "Sinus";
             fil = filters;
+
+            lfoChoice = lfo;
         }
         btnFilter.GetComponentInChildren<Text>().GetComponent<Text>().text = s;
+
+        //Color color = lfoChoice.OnLFO ? Color.red : Color.white;
+        btnSquareLFO.GetComponent<Image>().color = lfoChoice.OnLFO ? Color.red : Color.white;
 
         sliderCutoff.value = fil.Cutoff;
         sliderReso.value = fil.Resonance;
         sliderDist.value = fil.DistValue;
         sliderDelay.value = fil.Delay;
         sliderDecay.value = fil.Decay;
+
+        sliderAmplitude.value = lfoChoice.Amplitude;
+        sliderFrequency.value = lfoChoice.TimeOscillation;
 
         Debug.Log(oscForFiltrs);
     }
@@ -260,20 +273,20 @@ public class KeyNote : MonoBehaviour
     }
 
 
-    public void SliderDist(Filters f)//дисторшен
+    private void SliderDist(Filters f)//дисторшен
     {
         f.DistValue = sliderDist.value;
         f.Distortion();//дисторшен фильтр
         textDist.text = "Dist " + (sliderDist.value * 100).ToString("0");
     }
 
-    public void SliderDelay(Filters f)
+    private void SliderDelay(Filters f)
     {
         textDelay.text = "Delay " + sliderDelay.value.ToString("0");
         f.Delay = sliderDelay.value;
     }
 
-    public void SliderDecay(Filters f)
+    private void SliderDecay(Filters f)
     {
         f.Decay = sliderDecay.value;
         textDecay.text = "Decay " + (sliderDecay.value * 100).ToString("0");
@@ -281,31 +294,45 @@ public class KeyNote : MonoBehaviour
 
     public void BtnLFO()//кнопка включения лфо
     {
+        
         Color color;
 
-        if (!lfo.OnLFO)
+        if (!lfoChoice.OnLFO)
         {
-            lfo.OnLFO = true;
-            lfo.StartLFO();
+            lfoChoice.OnLFO = true;
+            lfoChoice.StartLFO();
             color = Color.red;
         }
         else
         {
-            lfo.OnLFO = false;
+            lfoChoice.OnLFO = false;
             color = Color.white;
         }
         btnSquareLFO.GetComponent<Image>().color = color;
-        
+
+
     }
 
-    public void FrequencyLFO()//частота ЛФО
+    private void FrequencyLFO(LFO l)//частота ЛФО
     {
-        lfo.TimeOscillation = sliderFrequency.value;
+        l.TimeOscillation = sliderFrequency.value;
     }
 
-    public void AmplitudeLFO()//амплитуда ЛФО
+    private void AmplitudeLFO(LFO l)//амплитуда ЛФО
     {
-        lfo.Amplitude = sliderAmplitude.value;
+        l.Amplitude = sliderAmplitude.value;
+    }
+
+    public void SliderVisable(GameObject slid)
+    {
+        slid.gameObject.SetActive(true);
+        //if (slid.activeSelf) slid.SetActive(false);
+        //else slid.gameObject.SetActive(true);
+    }
+
+    public void SliderInVisable(GameObject slid)
+    {
+        slid.gameObject.SetActive(false);
     }
 
 }
