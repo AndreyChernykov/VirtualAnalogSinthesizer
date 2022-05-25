@@ -24,6 +24,6 @@ public class Display : MonoBehaviour
     {
         float tmpValue = gameObject.GetComponent<Slider>().value;
         if (gameObject.GetComponent<Slider>().maxValue < 10) tmpValue *= 100;
-        textStrArr[1].text = text + "\n" + tmpValue.ToString("00");
+        textStrArr[textStrArr.Length-1].text = text + "\n" + tmpValue.ToString("00");
     }
 }

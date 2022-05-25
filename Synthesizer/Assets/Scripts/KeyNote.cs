@@ -52,6 +52,7 @@ public class KeyNote : MonoBehaviour
         lfo2 = GameObject.Find("OsciliatorSaw").GetComponent<LFO>();
         btnSeqArr = new Button[sequencer.SeqLength];
         display = gameObject.GetComponent<Display>();
+        display.ToDisplay(1, "bpm " + bpm);
 
         textBPM.text = bpm.ToString();
         CreateSequencer();
