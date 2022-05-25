@@ -8,7 +8,6 @@ public class KeyOctav : MonoBehaviour
     private int numOctav = 1;//номер октавы
     private int maxOctav = 4;//самая верхняя октава
     private int minOctav = -2;//самая нижняя октава
-    [SerializeField] TextMeshProUGUI textNumOctav;
     Display display;
 
     public void Start()
@@ -31,8 +30,7 @@ public class KeyOctav : MonoBehaviour
     }
 
     public void DisplayNumOctav()
-    {        
-        textNumOctav.text = numOctav.ToString();
+    {   
         display.ToDisplay(0, "octav "+ numOctav);
     }
 

@@ -7,18 +7,14 @@ using TMPro;
 public class KeyNote : MonoBehaviour
 {
     [SerializeField] Slider sliderDist;//слайдер дисторшена
-    //[SerializeField] TextMeshProUGUI textDist;
     [SerializeField] Slider sliderDelay;
-    //[SerializeField] TextMeshProUGUI textDelay;
     [SerializeField] Slider sliderDecay;
-    //[SerializeField] TextMeshProUGUI textDecay;
     [SerializeField] Slider sliderCutoff;
     [SerializeField] Slider sliderReso;
     [SerializeField] GameObject seqObj;
     [SerializeField] Button btnSeq;
     [SerializeField] Button btnRecSeq;
     [SerializeField] Button btnPlaySeq;
-    [SerializeField] TextMeshProUGUI textBPM;
     [SerializeField] Button btnSinOsc;
     [SerializeField] Button btnSawOsc;
     [SerializeField] Button btnFilter;
@@ -54,7 +50,6 @@ public class KeyNote : MonoBehaviour
         display = gameObject.GetComponent<Display>();
         display.ToDisplay(1, "bpm " + bpm);
 
-        textBPM.text = bpm.ToString();
         CreateSequencer();
 
     }
@@ -217,14 +212,12 @@ public class KeyNote : MonoBehaviour
         {
             bpm += s.Equals("+") ? 1 : -1;
             sequencer.BPM = bpm;
-            textBPM.text = bpm.ToString();
             display.ToDisplay(1, "bpm " + bpm);
             yield return new WaitForSeconds(0.15f);
         }
 
         if (bpm <= 1 && s.Equals("+")) bpm++;
         if(bpm >= maxBpm && s.Equals("-")) bpm--;
-        textBPM.text = bpm.ToString();
         StopCoroutine(BpiCounter(s));
 
     }
