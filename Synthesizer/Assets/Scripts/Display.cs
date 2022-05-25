@@ -7,7 +7,8 @@ using TMPro;
 public class Display : MonoBehaviour
 {
     [SerializeField] TextMeshProUGUI[] textStrArr;// массив строк дисплея
-    
+    [SerializeField] Image faider;
+    private float faidRoto = 0;
 
     public void Start()
     {
@@ -25,5 +26,16 @@ public class Display : MonoBehaviour
         float tmpValue = gameObject.GetComponent<Slider>().value;
         if (gameObject.GetComponent<Slider>().maxValue < 10) tmpValue *= 100;
         textStrArr[textStrArr.Length-1].text = text + "\n" + tmpValue.ToString("00");
+
+        float n;
+        if (faidRoto > tmpValue) n = tmpValue;
+        else n = -tmpValue;
+        faidRoto = tmpValue;
+        faider.transform.rotation *= new Quaternion(0, 0, n * Time.deltaTime, 1);
+    }
+
+    private void FaiderRotation()
+    {
+        faider.transform.rotation *= new Quaternion(0, 0, 1* Time.deltaTime, 1);
     }
 }
