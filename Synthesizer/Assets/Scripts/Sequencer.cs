@@ -61,7 +61,6 @@ public class Sequencer : MonoBehaviour
             {
                 oscilatorSinus.volume = keyNote.OnSinOsc ? 1 : 0;
                 oscillatorSaw.volume = keyNote.OnSawOsc ? 1 : 0;
-                //oscilatorSinus.volume = 1;
                 note = noteArr[i];
                 oscilatorSinus.pitch = note.FrqNote;
                 oscillatorSaw.pitch = note.FrqNote;

@@ -64,7 +64,7 @@ public class KeyNote : MonoBehaviour
         }
         else
         {
-            c = Color.red;
+            c = Color.grey;
             onSinOsc = true;
         }
         btnSinOsc.GetComponent<Image>().color = c;
@@ -85,7 +85,7 @@ public class KeyNote : MonoBehaviour
         }
         else
         {
-            c = Color.red;
+            c = Color.gray;
             onSawOsc = true;
         }
         btnSawOsc.GetComponent<Image>().color = c;
@@ -165,8 +165,8 @@ public class KeyNote : MonoBehaviour
     {
         Color c;
         for (int i = 0; i < btnSeqArr.Length; i++) btnSeqArr[i].GetComponent<Image>().color = Color.white;
-        if(toRec)c = Color.red;//если включина запись
-        else c = Color.green;//если включино воспроизведение
+        if(toRec)c = Color.gray;//если включина запись
+        else c = Color.gray;//если включино воспроизведение
         btnSeqArr[numKey].GetComponent<Image>().color = c;
     }
 
@@ -187,7 +187,7 @@ public class KeyNote : MonoBehaviour
         else
         {
             numKeySeqToClick = 0;
-            c = Color.red;
+            c = Color.gray;
             toRec = true;
         }
         btnRecSeq.GetComponent<Image>().color = c;
@@ -244,8 +244,7 @@ public class KeyNote : MonoBehaviour
         }
         btnFilter.GetComponentInChildren<Text>().GetComponent<Text>().text = s;
 
-        //Color color = lfoChoice.OnLFO ? Color.red : Color.white;
-        btnSquareLFO.GetComponent<Image>().color = lfoChoice.OnLFO ? Color.red : Color.white;
+        btnSquareLFO.GetComponent<Image>().color = lfoChoice.OnLFO ? Color.gray : Color.white;
 
         sliderCutoff.value = fil.Cutoff;
         sliderReso.value = fil.Resonance;
@@ -274,19 +273,16 @@ public class KeyNote : MonoBehaviour
     {
         f.DistValue = sliderDist.value;
         f.Distortion();//дисторшен фильтр
-        //textDist.text = "Dist " + (sliderDist.value * 100).ToString("0");
     }
 
     private void SliderDelay(Filters f)
     {
-        //textDelay.text = "Delay " + sliderDelay.value.ToString("0");
         f.Delay = sliderDelay.value;
     }
 
     private void SliderDecay(Filters f)
     {
         f.Decay = sliderDecay.value;
-        //textDecay.text = "Decay " + (sliderDecay.value * 100).ToString("0");
     }
 
     public void BtnLFO()//кнопка включения лфо
@@ -298,7 +294,7 @@ public class KeyNote : MonoBehaviour
         {
             lfoChoice.OnLFO = true;
             lfoChoice.StartLFO();
-            color = Color.red;
+            color = Color.gray;
         }
         else
         {
@@ -323,8 +319,6 @@ public class KeyNote : MonoBehaviour
     public void SliderVisable(GameObject slid)
     {
         slid.gameObject.SetActive(true);
-        //if (slid.activeSelf) slid.SetActive(false);
-        //else slid.gameObject.SetActive(true);
     }
 
     public void SliderInVisable(GameObject slid)
