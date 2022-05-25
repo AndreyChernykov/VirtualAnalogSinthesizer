@@ -7,11 +7,11 @@ using TMPro;
 public class KeyNote : MonoBehaviour
 {
     [SerializeField] Slider sliderDist;//слайдер дисторшена
-    [SerializeField] TextMeshProUGUI textDist;
+    //[SerializeField] TextMeshProUGUI textDist;
     [SerializeField] Slider sliderDelay;
-    [SerializeField] TextMeshProUGUI textDelay;
+    //[SerializeField] TextMeshProUGUI textDelay;
     [SerializeField] Slider sliderDecay;
-    [SerializeField] TextMeshProUGUI textDecay;
+    //[SerializeField] TextMeshProUGUI textDecay;
     [SerializeField] Slider sliderCutoff;
     [SerializeField] Slider sliderReso;
     [SerializeField] GameObject seqObj;
@@ -39,6 +39,7 @@ public class KeyNote : MonoBehaviour
     Sequencer sequencer;
     LFO lfo, lfo2;
     LFO lfoChoice;
+    Display display;
     private Button[] btnSeqArr;
 
     public void Start()
@@ -50,6 +51,7 @@ public class KeyNote : MonoBehaviour
         lfo = GameObject.Find("OsciliatorSinus").GetComponent<LFO>();
         lfo2 = GameObject.Find("OsciliatorSaw").GetComponent<LFO>();
         btnSeqArr = new Button[sequencer.SeqLength];
+        display = gameObject.GetComponent<Display>();
 
         textBPM.text = bpm.ToString();
         CreateSequencer();
@@ -215,6 +217,7 @@ public class KeyNote : MonoBehaviour
             bpm += s.Equals("+") ? 1 : -1;
             sequencer.BPM = bpm;
             textBPM.text = bpm.ToString();
+            display.ToDisplay(1, "bpm " + bpm);
             yield return new WaitForSeconds(0.15f);
         }
 
@@ -277,19 +280,19 @@ public class KeyNote : MonoBehaviour
     {
         f.DistValue = sliderDist.value;
         f.Distortion();//дисторшен фильтр
-        textDist.text = "Dist " + (sliderDist.value * 100).ToString("0");
+        //textDist.text = "Dist " + (sliderDist.value * 100).ToString("0");
     }
 
     private void SliderDelay(Filters f)
     {
-        textDelay.text = "Delay " + sliderDelay.value.ToString("0");
+        //textDelay.text = "Delay " + sliderDelay.value.ToString("0");
         f.Delay = sliderDelay.value;
     }
 
     private void SliderDecay(Filters f)
     {
         f.Decay = sliderDecay.value;
-        textDecay.text = "Decay " + (sliderDecay.value * 100).ToString("0");
+        //textDecay.text = "Decay " + (sliderDecay.value * 100).ToString("0");
     }
 
     public void BtnLFO()//кнопка включения лфо
@@ -334,5 +337,7 @@ public class KeyNote : MonoBehaviour
     {
         slid.gameObject.SetActive(false);
     }
+
+
 
 }
