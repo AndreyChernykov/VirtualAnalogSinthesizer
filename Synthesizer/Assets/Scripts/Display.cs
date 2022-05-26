@@ -9,11 +9,11 @@ public class Display : MonoBehaviour
     [SerializeField] TextMeshProUGUI[] textStrArr;// массив строк дисплея
     [SerializeField] Image faider;
     private float faidRoto = 0;
+    float tmpValue;
 
     public void Start()
     {
-        //Dysplay(0, "test");
-        //Dysplay(1, "test");
+
     }
 
     public void ToDisplay(int strNum, string text)
@@ -21,21 +21,24 @@ public class Display : MonoBehaviour
         textStrArr[strNum].text = text;
     }
 
-    public void ToDisplay(string text)
+    public void ToDisplay(string text)//отображение значения на дисплее
     {
-        float tmpValue = gameObject.GetComponent<Slider>().value;
-        if (gameObject.GetComponent<Slider>().maxValue < 10) tmpValue *= 100;
+        tmpValue = gameObject.GetComponent<Slider>().value;
+        float maxValue = gameObject.GetComponent<Slider>().maxValue;
+
+        if (maxValue < 10) tmpValue *= 100;
+        else if(maxValue > 1000) tmpValue /= 100;
         textStrArr[textStrArr.Length-1].text = text + "\n" + tmpValue.ToString("00");
 
+        FaiderRotation();
+    }
+
+    private void FaiderRotation()//вращение фэйдера
+    {
         float n;
         if (faidRoto > tmpValue) n = tmpValue;
         else n = -tmpValue;
         faidRoto = tmpValue;
         faider.transform.rotation *= new Quaternion(0, 0, n * Time.deltaTime, 1);
-    }
-
-    private void FaiderRotation()
-    {
-        faider.transform.rotation *= new Quaternion(0, 0, 1* Time.deltaTime, 1);
     }
 }
