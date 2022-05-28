@@ -5,7 +5,7 @@ using UnityEngine;
 public class TextContent
 {
     public const string version = "v0.9";
-    public const string about = "О приложении:\nВиртуальный аналоговый синтезатор " +
+    public const string about = "О приложении:\nВиртуальный аналоговый 5-ти октавный синтезатор " +
         "с двумя осцилляторами (синусойды и пилы), " +
         "16-ти шаговым секвенсором и LFO квадратной волны";
 
