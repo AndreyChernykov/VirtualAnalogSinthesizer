@@ -6,7 +6,7 @@ using UnityEngine;
 public class KeyOctav : MonoBehaviour
 {
     private int numOctav = 1;//номер октавы
-    private int maxOctav = 4;//самая верхняя октава
+    private int maxOctav = 3;//самая верхняя октава
     private int minOctav = -2;//самая нижняя октава
     Display display;
 

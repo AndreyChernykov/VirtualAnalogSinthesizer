@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class KeyNote : MonoBehaviour
 {
@@ -326,6 +327,9 @@ public class KeyNote : MonoBehaviour
         slid.gameObject.SetActive(false);
     }
 
-
+    public void ClickHelp()//нажатие на кнопку с вопросом
+    {
+        SceneManager.LoadScene("Help");
+    }
 
 }

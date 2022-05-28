@@ -6,6 +6,9 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Synthesizer.unity
+    path: Assets/Scenes/Synthesizer.unity
     guid: 959abcfd4cf1d4b4a80bef4158309d8e
+  - enabled: 1
+    path: Assets/Scenes/Help.unity
+    guid: cca31d6521892d24d93699896c6c1f40
   m_configObjects: {}
