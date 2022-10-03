@@ -8,6 +8,7 @@ public class Help : MonoBehaviour
 {
     TextContent textContent;
     [SerializeField] Text textAbout;
+    [SerializeField] InterAd interAd;
 
     public void Start()
     {
@@ -17,6 +18,8 @@ public class Help : MonoBehaviour
 
     public void Back()//обработка нажатия на кнопку Back
     {
-        SceneManager.LoadScene("Synthesizer");
+        interAd.Show();
+        if(interAd.IsGo)SceneManager.LoadScene("Synthesizer");
+
     }
 }

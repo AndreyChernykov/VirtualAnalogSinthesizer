@@ -7,6 +7,8 @@ using UnityEngine.SceneManagement;
 
 public class KeyNote : MonoBehaviour
 {
+    [SerializeField] InterAd interAd;
+
     [SerializeField] Slider sliderDist;//слайдер дисторшена
     [SerializeField] Slider sliderDelay;
     [SerializeField] Slider sliderDecay;
@@ -329,7 +331,9 @@ public class KeyNote : MonoBehaviour
 
     public void ClickHelp()//нажатие на кнопку с вопросом
     {
-        SceneManager.LoadScene("Help");
+        interAd.Show();
+
+        if(interAd.IsGo)SceneManager.LoadScene("Help");
     }
 
 }
