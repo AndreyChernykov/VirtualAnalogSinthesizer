@@ -331,10 +331,9 @@ public class KeyNote : MonoBehaviour
 
     public void ClickHelp()//нажатие на кнопку с вопросом
     {
-        //interAd.Show();
+        interAd.Show();
 
-        //if(interAd.IsGo)
-        SceneManager.LoadScene("Help");
+        if(interAd.IsGo)SceneManager.LoadScene("Help");
     }
 
 }

@@ -18,8 +18,7 @@ public class Help : MonoBehaviour
 
     public void Back()//обработка нажатия на кнопку Back
     {
-        //interAd.Show();
-        //if (interAd.IsGo) 
-        SceneManager.LoadScene("Synthesizer");
+        interAd.Show();
+        if (interAd.IsGo) SceneManager.LoadScene("Synthesizer");
     }
 }
